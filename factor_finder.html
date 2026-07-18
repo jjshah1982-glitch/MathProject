@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factor Finder</title>
+
+<style>
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    margin:40px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+h1{
+    text-align:center;
+    color:#1d4e89;
+}
+
+input{
+    width:150px;
+    padding:10px;
+    font-size:18px;
+}
+
+button{
+    padding:10px 20px;
+    font-size:18px;
+    cursor:pointer;
+    background:#1d4e89;
+    color:white;
+    border:none;
+    border-radius:5px;
+}
+
+button:hover{
+    background:#163c68;
+}
+
+.result{
+    margin-top:25px;
+    padding:20px;
+    background:#eef5ff;
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+}
+
+th{
+    background:#d9e8ff;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Factor Finder</h1>
+
+<p>
+Enter a whole number:
+</p>
+
+<input
+id="numberInput"
+type="number"
+min="1"
+placeholder="Enter number">
+
+<button onclick="findFactors()">
+Find Factors
+</button>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+document.getElementById("numberInput").addEventListener("keypress",function(e){
+
+    if(e.key==="Enter"){
+        findFactors();
+    }
+
+});
+
+function findFactors(){
+
+    let n=parseInt(document.getElementById("numberInput").value);
+
+    let result=document.getElementById("result");
+
+    if(isNaN(n) || n<1){
+
+        result.innerHTML="<b>Please enter a positive whole number.</b>";
+        return;
+
+    }
+
+    let factors=[];
+    let pairs=[];
+
+    for(let i=1;i<=Math.sqrt(n);i++){
+
+        if(n%i===0){
+
+            factors.push(i);
+
+            if(i!==n/i){
+                factors.push(n/i);
+            }
+
+            pairs.push([i,n/i]);
+
+        }
+
+    }
+
+    factors.sort(function(a,b){
+        return a-b;
+    });
+
+    let type=(factors.length===2) ? "Prime" : "Composite";
+
+    let html="";
+
+    html+="<h2>Results for "+n+"</h2>";
+
+    html+="<p><b>Type:</b> "+type+"</p>";
+
+    html+="<p><b>Number of Factors:</b> "+factors.length+"</p>";
+
+    html+="<p><b>Factors:</b><br>"+factors.join(", ")+"</p>";
+
+    html+="<h3>Factor Pairs</h3>";
+
+    html+="<table>";
+
+    html+="<tr><th>Pair</th><th>Multiplication</th></tr>";
+
+    for(let i=0;i<pairs.length;i++){
+
+        html+="<tr>";
+
+        html+="<td>"+pairs[i][0]+" & "+pairs[i][1]+"</td>";
+
+        html+="<td>"+pairs[i][0]+" × "+pairs[i][1]+" = "+n+"</td>";
+
+        html+="</tr>";
+
+    }
+
+    html+="</table>";
+
+    result.innerHTML=html;
+
+}
+
+</script>
+
+</body>
+</html>
