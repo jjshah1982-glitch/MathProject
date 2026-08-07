@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Practice — 08/07/2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    background: #f9f9f9;
+    color: #333;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    text-align: center;
+    color: #2E5090;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  h2 {
+    color: #2E5090;
+    font-size: 22px;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #2E5090;
+  }
+  .date {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .question {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .question .num {
+    font-weight: bold;
+    color: #2E5090;
+    min-width: 30px;
+  }
+  .question .prompt {
+    flex: 1;
+    font-size: 18px;
+    min-width: 200px;
+  }
+  .question input {
+    font-size: 18px;
+    padding: 8px 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    width: 140px;
+    text-align: center;
+  }
+  .question input:focus {
+    border-color: #2E5090;
+    outline: none;
+  }
+  .question .feedback {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 140px;
+  }
+  .correct { color: #2e7d32; }
+  .tryagain { color: #e65100; }
+  button.check-btn {
+    font-size: 16px;
+    padding: 8px 16px;
+    background: #2E5090;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button.check-btn:hover {
+    background: #1a3a6b;
+  }
+  .section-score {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2E5090;
+    margin: 10px 0 20px 0;
+    padding: 10px;
+    background: #e8f0fe;
+    border-radius: 8px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>Math Practice</h1>
+<p class="date">08/07/2026</p>
+
+<h2>Section 1: Cross Multiplication</h2>
+<p style="margin-bottom:12px;">Solve for T.</p>
+<div class="question">
+  <span class="num">1.</span>
+  <span class="prompt">11/T = 88/16</span>
+  <input type="text" id="cm_1" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_1', 2, 'cmfb_1')">Check</button>
+  <span class="feedback" id="cmfb_1"></span>
+</div>
+<div class="question">
+  <span class="num">2.</span>
+  <span class="prompt">10/10 = T/40</span>
+  <input type="text" id="cm_2" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_2', 40, 'cmfb_2')">Check</button>
+  <span class="feedback" id="cmfb_2"></span>
+</div>
+<div class="question">
+  <span class="num">3.</span>
+  <span class="prompt">10/8 = 40/T</span>
+  <input type="text" id="cm_3" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_3', 32, 'cmfb_3')">Check</button>
+  <span class="feedback" id="cmfb_3"></span>
+</div>
+<div class="question">
+  <span class="num">4.</span>
+  <span class="prompt">7/3 = 21/T</span>
+  <input type="text" id="cm_4" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_4', 9, 'cmfb_4')">Check</button>
+  <span class="feedback" id="cmfb_4"></span>
+</div>
+<div class="question">
+  <span class="num">5.</span>
+  <span class="prompt">4/T = 16/44</span>
+  <input type="text" id="cm_5" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_5', 11, 'cmfb_5')">Check</button>
+  <span class="feedback" id="cmfb_5"></span>
+</div>
+<div class="question">
+  <span class="num">6.</span>
+  <span class="prompt">6/T = 42/42</span>
+  <input type="text" id="cm_6" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_6', 6, 'cmfb_6')">Check</button>
+  <span class="feedback" id="cmfb_6"></span>
+</div>
+<div class="question">
+  <span class="num">7.</span>
+  <span class="prompt">T/2 = 48/8</span>
+  <input type="text" id="cm_7" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_7', 12, 'cmfb_7')">Check</button>
+  <span class="feedback" id="cmfb_7"></span>
+</div>
+<div class="question">
+  <span class="num">8.</span>
+  <span class="prompt">T/8 = 30/40</span>
+  <input type="text" id="cm_8" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_8', 6, 'cmfb_8')">Check</button>
+  <span class="feedback" id="cmfb_8"></span>
+</div>
+<div class="question">
+  <span class="num">9.</span>
+  <span class="prompt">9/5 = T/15</span>
+  <input type="text" id="cm_9" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_9', 27, 'cmfb_9')">Check</button>
+  <span class="feedback" id="cmfb_9"></span>
+</div>
+<div class="question">
+  <span class="num">10.</span>
+  <span class="prompt">T/12 = 88/96</span>
+  <input type="text" id="cm_10" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_10', 11, 'cmfb_10')">Check</button>
+  <span class="feedback" id="cmfb_10"></span>
+</div>
+<div class="question">
+  <span class="num">11.</span>
+  <span class="prompt">7/T = 28/36</span>
+  <input type="text" id="cm_11" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_11', 9, 'cmfb_11')">Check</button>
+  <span class="feedback" id="cmfb_11"></span>
+</div>
+<div class="question">
+  <span class="num">12.</span>
+  <span class="prompt">2/T = 16/96</span>
+  <input type="text" id="cm_12" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_12', 12, 'cmfb_12')">Check</button>
+  <span class="feedback" id="cmfb_12"></span>
+</div>
+<div class="question">
+  <span class="num">13.</span>
+  <span class="prompt">11/T = 55/60</span>
+  <input type="text" id="cm_13" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_13', 12, 'cmfb_13')">Check</button>
+  <span class="feedback" id="cmfb_13"></span>
+</div>
+<div class="question">
+  <span class="num">14.</span>
+  <span class="prompt">9/T = 27/18</span>
+  <input type="text" id="cm_14" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_14', 6, 'cmfb_14')">Check</button>
+  <span class="feedback" id="cmfb_14"></span>
+</div>
+<div class="question">
+  <span class="num">15.</span>
+  <span class="prompt">11/12 = 66/T</span>
+  <input type="text" id="cm_15" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_15', 72, 'cmfb_15')">Check</button>
+  <span class="feedback" id="cmfb_15"></span>
+</div>
+<div class="question">
+  <span class="num">16.</span>
+  <span class="prompt">T/12 = 45/108</span>
+  <input type="text" id="cm_16" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_16', 5, 'cmfb_16')">Check</button>
+  <span class="feedback" id="cmfb_16"></span>
+</div>
+<div class="question">
+  <span class="num">17.</span>
+  <span class="prompt">T/11 = 96/88</span>
+  <input type="text" id="cm_17" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_17', 12, 'cmfb_17')">Check</button>
+  <span class="feedback" id="cmfb_17"></span>
+</div>
+<div class="question">
+  <span class="num">18.</span>
+  <span class="prompt">6/T = 48/64</span>
+  <input type="text" id="cm_18" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_18', 8, 'cmfb_18')">Check</button>
+  <span class="feedback" id="cmfb_18"></span>
+</div>
+<div class="question">
+  <span class="num">19.</span>
+  <span class="prompt">T/6 = 35/42</span>
+  <input type="text" id="cm_19" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_19', 5, 'cmfb_19')">Check</button>
+  <span class="feedback" id="cmfb_19"></span>
+</div>
+<div class="question">
+  <span class="num">20.</span>
+  <span class="prompt">10/11 = T/55</span>
+  <input type="text" id="cm_20" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_20', 50, 'cmfb_20')">Check</button>
+  <span class="feedback" id="cmfb_20"></span>
+</div>
+<div class="question">
+  <span class="num">21.</span>
+  <span class="prompt">3/5 = 6/T</span>
+  <input type="text" id="cm_21" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_21', 10, 'cmfb_21')">Check</button>
+  <span class="feedback" id="cmfb_21"></span>
+</div>
+<div class="question">
+  <span class="num">22.</span>
+  <span class="prompt">5/T = 50/70</span>
+  <input type="text" id="cm_22" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_22', 7, 'cmfb_22')">Check</button>
+  <span class="feedback" id="cmfb_22"></span>
+</div>
+<div class="question">
+  <span class="num">23.</span>
+  <span class="prompt">10/7 = 50/T</span>
+  <input type="text" id="cm_23" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_23', 35, 'cmfb_23')">Check</button>
+  <span class="feedback" id="cmfb_23"></span>
+</div>
+<div class="question">
+  <span class="num">24.</span>
+  <span class="prompt">8/12 = T/120</span>
+  <input type="text" id="cm_24" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_24', 80, 'cmfb_24')">Check</button>
+  <span class="feedback" id="cmfb_24"></span>
+</div>
+<div class="question">
+  <span class="num">25.</span>
+  <span class="prompt">T/7 = 77/49</span>
+  <input type="text" id="cm_25" placeholder="T = ?">
+  <button class="check-btn" onclick="checkAnswer('cm_25', 11, 'cmfb_25')">Check</button>
+  <span class="feedback" id="cmfb_25"></span>
+</div>
+<div class="section-score" id="cm_score"></div>
+<h2>Section 2: Factors</h2>
+<p style="margin-bottom:12px;">Type all factors separated by commas (e.g. 1, 2, 4, 8).</p>
+<div class="question">
+  <span class="num">1.</span>
+  <span class="prompt">Factors of <b>77</b></span>
+  <input type="text" id="fac_1" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_1', [1, 7, 11, 77], 'facfb_1')">Check</button>
+  <span class="feedback" id="facfb_1"></span>
+</div>
+<div class="question">
+  <span class="num">2.</span>
+  <span class="prompt">Factors of <b>96</b></span>
+  <input type="text" id="fac_2" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_2', [1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 96], 'facfb_2')">Check</button>
+  <span class="feedback" id="facfb_2"></span>
+</div>
+<div class="question">
+  <span class="num">3.</span>
+  <span class="prompt">Factors of <b>327</b></span>
+  <input type="text" id="fac_3" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_3', [1, 3, 109, 327], 'facfb_3')">Check</button>
+  <span class="feedback" id="facfb_3"></span>
+</div>
+<div class="question">
+  <span class="num">4.</span>
+  <span class="prompt">Factors of <b>13</b></span>
+  <input type="text" id="fac_4" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_4', [1, 13], 'facfb_4')">Check</button>
+  <span class="feedback" id="facfb_4"></span>
+</div>
+<div class="question">
+  <span class="num">5.</span>
+  <span class="prompt">Factors of <b>923</b></span>
+  <input type="text" id="fac_5" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_5', [1, 13, 71, 923], 'facfb_5')">Check</button>
+  <span class="feedback" id="facfb_5"></span>
+</div>
+<div class="question">
+  <span class="num">6.</span>
+  <span class="prompt">Factors of <b>26</b></span>
+  <input type="text" id="fac_6" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_6', [1, 2, 13, 26], 'facfb_6')">Check</button>
+  <span class="feedback" id="facfb_6"></span>
+</div>
+<div class="question">
+  <span class="num">7.</span>
+  <span class="prompt">Factors of <b>21</b></span>
+  <input type="text" id="fac_7" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_7', [1, 3, 7, 21], 'facfb_7')">Check</button>
+  <span class="feedback" id="facfb_7"></span>
+</div>
+<div class="question">
+  <span class="num">8.</span>
+  <span class="prompt">Factors of <b>163</b></span>
+  <input type="text" id="fac_8" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_8', [1, 163], 'facfb_8')">Check</button>
+  <span class="feedback" id="facfb_8"></span>
+</div>
+<div class="question">
+  <span class="num">9.</span>
+  <span class="prompt">Factors of <b>81</b></span>
+  <input type="text" id="fac_9" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_9', [1, 3, 9, 27, 81], 'facfb_9')">Check</button>
+  <span class="feedback" id="facfb_9"></span>
+</div>
+<div class="question">
+  <span class="num">10.</span>
+  <span class="prompt">Factors of <b>363</b></span>
+  <input type="text" id="fac_10" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_10', [1, 3, 11, 33, 121, 363], 'facfb_10')">Check</button>
+  <span class="feedback" id="facfb_10"></span>
+</div>
+<div class="question">
+  <span class="num">11.</span>
+  <span class="prompt">Factors of <b>966</b></span>
+  <input type="text" id="fac_11" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_11', [1, 2, 3, 6, 7, 14, 21, 23, 42, 46, 69, 138, 161, 322, 483, 966], 'facfb_11')">Check</button>
+  <span class="feedback" id="facfb_11"></span>
+</div>
+<div class="question">
+  <span class="num">12.</span>
+  <span class="prompt">Factors of <b>591</b></span>
+  <input type="text" id="fac_12" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_12', [1, 3, 197, 591], 'facfb_12')">Check</button>
+  <span class="feedback" id="facfb_12"></span>
+</div>
+<div class="question">
+  <span class="num">13.</span>
+  <span class="prompt">Factors of <b>856</b></span>
+  <input type="text" id="fac_13" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_13', [1, 2, 4, 8, 107, 214, 428, 856], 'facfb_13')">Check</button>
+  <span class="feedback" id="facfb_13"></span>
+</div>
+<div class="question">
+  <span class="num">14.</span>
+  <span class="prompt">Factors of <b>46</b></span>
+  <input type="text" id="fac_14" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_14', [1, 2, 23, 46], 'facfb_14')">Check</button>
+  <span class="feedback" id="facfb_14"></span>
+</div>
+<div class="question">
+  <span class="num">15.</span>
+  <span class="prompt">Factors of <b>121</b></span>
+  <input type="text" id="fac_15" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_15', [1, 11, 121], 'facfb_15')">Check</button>
+  <span class="feedback" id="facfb_15"></span>
+</div>
+<div class="question">
+  <span class="num">16.</span>
+  <span class="prompt">Factors of <b>508</b></span>
+  <input type="text" id="fac_16" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_16', [1, 2, 4, 127, 254, 508], 'facfb_16')">Check</button>
+  <span class="feedback" id="facfb_16"></span>
+</div>
+<div class="question">
+  <span class="num">17.</span>
+  <span class="prompt">Factors of <b>838</b></span>
+  <input type="text" id="fac_17" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_17', [1, 2, 419, 838], 'facfb_17')">Check</button>
+  <span class="feedback" id="facfb_17"></span>
+</div>
+<div class="question">
+  <span class="num">18.</span>
+  <span class="prompt">Factors of <b>24</b></span>
+  <input type="text" id="fac_18" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_18', [1, 2, 3, 4, 6, 8, 12, 24], 'facfb_18')">Check</button>
+  <span class="feedback" id="facfb_18"></span>
+</div>
+<div class="question">
+  <span class="num">19.</span>
+  <span class="prompt">Factors of <b>23</b></span>
+  <input type="text" id="fac_19" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_19', [1, 23], 'facfb_19')">Check</button>
+  <span class="feedback" id="facfb_19"></span>
+</div>
+<div class="question">
+  <span class="num">20.</span>
+  <span class="prompt">Factors of <b>97</b></span>
+  <input type="text" id="fac_20" placeholder="1, 2, ..." style="width:220px;">
+  <button class="check-btn" onclick="checkFactors('fac_20', [1, 97], 'facfb_20')">Check</button>
+  <span class="feedback" id="facfb_20"></span>
+</div>
+<div class="section-score" id="fac_score"></div>
+<h2>Section 3: Multiplication</h2>
+<p style="margin-bottom:12px;">Multiply. Remember the sign rules!</p>
+<div class="question">
+  <span class="num">1.</span>
+  <span class="prompt">-1 × -7 =</span>
+  <input type="text" id="mul_1" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_1', 7, 'mulfb_1')">Check</button>
+  <span class="feedback" id="mulfb_1"></span>
+</div>
+<div class="question">
+  <span class="num">2.</span>
+  <span class="prompt">-4 × 84 =</span>
+  <input type="text" id="mul_2" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_2', -336, 'mulfb_2')">Check</button>
+  <span class="feedback" id="mulfb_2"></span>
+</div>
+<div class="question">
+  <span class="num">3.</span>
+  <span class="prompt">-8 × 14 =</span>
+  <input type="text" id="mul_3" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_3', -112, 'mulfb_3')">Check</button>
+  <span class="feedback" id="mulfb_3"></span>
+</div>
+<div class="question">
+  <span class="num">4.</span>
+  <span class="prompt">-7 × 83 =</span>
+  <input type="text" id="mul_4" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_4', -581, 'mulfb_4')">Check</button>
+  <span class="feedback" id="mulfb_4"></span>
+</div>
+<div class="question">
+  <span class="num">5.</span>
+  <span class="prompt">-4 × -4 =</span>
+  <input type="text" id="mul_5" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_5', 16, 'mulfb_5')">Check</button>
+  <span class="feedback" id="mulfb_5"></span>
+</div>
+<div class="question">
+  <span class="num">6.</span>
+  <span class="prompt">-3 × 21 =</span>
+  <input type="text" id="mul_6" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_6', -63, 'mulfb_6')">Check</button>
+  <span class="feedback" id="mulfb_6"></span>
+</div>
+<div class="question">
+  <span class="num">7.</span>
+  <span class="prompt">81 × -7 =</span>
+  <input type="text" id="mul_7" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_7', -567, 'mulfb_7')">Check</button>
+  <span class="feedback" id="mulfb_7"></span>
+</div>
+<div class="question">
+  <span class="num">8.</span>
+  <span class="prompt">-8 × 95 =</span>
+  <input type="text" id="mul_8" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_8', -760, 'mulfb_8')">Check</button>
+  <span class="feedback" id="mulfb_8"></span>
+</div>
+<div class="question">
+  <span class="num">9.</span>
+  <span class="prompt">63 × 4 =</span>
+  <input type="text" id="mul_9" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_9', 252, 'mulfb_9')">Check</button>
+  <span class="feedback" id="mulfb_9"></span>
+</div>
+<div class="question">
+  <span class="num">10.</span>
+  <span class="prompt">-6 × -9 =</span>
+  <input type="text" id="mul_10" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_10', 54, 'mulfb_10')">Check</button>
+  <span class="feedback" id="mulfb_10"></span>
+</div>
+<div class="question">
+  <span class="num">11.</span>
+  <span class="prompt">73 × -7 =</span>
+  <input type="text" id="mul_11" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_11', -511, 'mulfb_11')">Check</button>
+  <span class="feedback" id="mulfb_11"></span>
+</div>
+<div class="question">
+  <span class="num">12.</span>
+  <span class="prompt">52 × -1 =</span>
+  <input type="text" id="mul_12" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_12', -52, 'mulfb_12')">Check</button>
+  <span class="feedback" id="mulfb_12"></span>
+</div>
+<div class="question">
+  <span class="num">13.</span>
+  <span class="prompt">-8 × -9 =</span>
+  <input type="text" id="mul_13" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_13', 72, 'mulfb_13')">Check</button>
+  <span class="feedback" id="mulfb_13"></span>
+</div>
+<div class="question">
+  <span class="num">14.</span>
+  <span class="prompt">93 × -2 =</span>
+  <input type="text" id="mul_14" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_14', -186, 'mulfb_14')">Check</button>
+  <span class="feedback" id="mulfb_14"></span>
+</div>
+<div class="question">
+  <span class="num">15.</span>
+  <span class="prompt">-1 × 80 =</span>
+  <input type="text" id="mul_15" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_15', -80, 'mulfb_15')">Check</button>
+  <span class="feedback" id="mulfb_15"></span>
+</div>
+<div class="question">
+  <span class="num">16.</span>
+  <span class="prompt">18 × -9 =</span>
+  <input type="text" id="mul_16" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_16', -162, 'mulfb_16')">Check</button>
+  <span class="feedback" id="mulfb_16"></span>
+</div>
+<div class="question">
+  <span class="num">17.</span>
+  <span class="prompt">-9 × 57 =</span>
+  <input type="text" id="mul_17" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_17', -513, 'mulfb_17')">Check</button>
+  <span class="feedback" id="mulfb_17"></span>
+</div>
+<div class="question">
+  <span class="num">18.</span>
+  <span class="prompt">-1 × 46 =</span>
+  <input type="text" id="mul_18" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_18', -46, 'mulfb_18')">Check</button>
+  <span class="feedback" id="mulfb_18"></span>
+</div>
+<div class="question">
+  <span class="num">19.</span>
+  <span class="prompt">15 × 11 =</span>
+  <input type="text" id="mul_19" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_19', 165, 'mulfb_19')">Check</button>
+  <span class="feedback" id="mulfb_19"></span>
+</div>
+<div class="question">
+  <span class="num">20.</span>
+  <span class="prompt">-4 × -3 =</span>
+  <input type="text" id="mul_20" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_20', 12, 'mulfb_20')">Check</button>
+  <span class="feedback" id="mulfb_20"></span>
+</div>
+<div class="question">
+  <span class="num">21.</span>
+  <span class="prompt">97 × 10 =</span>
+  <input type="text" id="mul_21" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_21', 970, 'mulfb_21')">Check</button>
+  <span class="feedback" id="mulfb_21"></span>
+</div>
+<div class="question">
+  <span class="num">22.</span>
+  <span class="prompt">-2 × -2 =</span>
+  <input type="text" id="mul_22" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_22', 4, 'mulfb_22')">Check</button>
+  <span class="feedback" id="mulfb_22"></span>
+</div>
+<div class="question">
+  <span class="num">23.</span>
+  <span class="prompt">-2 × -4 =</span>
+  <input type="text" id="mul_23" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_23', 8, 'mulfb_23')">Check</button>
+  <span class="feedback" id="mulfb_23"></span>
+</div>
+<div class="question">
+  <span class="num">24.</span>
+  <span class="prompt">45 × 9 =</span>
+  <input type="text" id="mul_24" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_24', 405, 'mulfb_24')">Check</button>
+  <span class="feedback" id="mulfb_24"></span>
+</div>
+<div class="question">
+  <span class="num">25.</span>
+  <span class="prompt">37 × -9 =</span>
+  <input type="text" id="mul_25" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_25', -333, 'mulfb_25')">Check</button>
+  <span class="feedback" id="mulfb_25"></span>
+</div>
+<div class="question">
+  <span class="num">26.</span>
+  <span class="prompt">-9 × 74 =</span>
+  <input type="text" id="mul_26" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_26', -666, 'mulfb_26')">Check</button>
+  <span class="feedback" id="mulfb_26"></span>
+</div>
+<div class="question">
+  <span class="num">27.</span>
+  <span class="prompt">30 × -1 =</span>
+  <input type="text" id="mul_27" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_27', -30, 'mulfb_27')">Check</button>
+  <span class="feedback" id="mulfb_27"></span>
+</div>
+<div class="question">
+  <span class="num">28.</span>
+  <span class="prompt">-6 × 66 =</span>
+  <input type="text" id="mul_28" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_28', -396, 'mulfb_28')">Check</button>
+  <span class="feedback" id="mulfb_28"></span>
+</div>
+<div class="question">
+  <span class="num">29.</span>
+  <span class="prompt">67 × -1 =</span>
+  <input type="text" id="mul_29" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_29', -67, 'mulfb_29')">Check</button>
+  <span class="feedback" id="mulfb_29"></span>
+</div>
+<div class="question">
+  <span class="num">30.</span>
+  <span class="prompt">-2 × 62 =</span>
+  <input type="text" id="mul_30" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_30', -124, 'mulfb_30')">Check</button>
+  <span class="feedback" id="mulfb_30"></span>
+</div>
+<div class="question">
+  <span class="num">31.</span>
+  <span class="prompt">18 × 11 =</span>
+  <input type="text" id="mul_31" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_31', 198, 'mulfb_31')">Check</button>
+  <span class="feedback" id="mulfb_31"></span>
+</div>
+<div class="question">
+  <span class="num">32.</span>
+  <span class="prompt">64 × 12 =</span>
+  <input type="text" id="mul_32" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_32', 768, 'mulfb_32')">Check</button>
+  <span class="feedback" id="mulfb_32"></span>
+</div>
+<div class="question">
+  <span class="num">33.</span>
+  <span class="prompt">-3 × -5 =</span>
+  <input type="text" id="mul_33" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_33', 15, 'mulfb_33')">Check</button>
+  <span class="feedback" id="mulfb_33"></span>
+</div>
+<div class="question">
+  <span class="num">34.</span>
+  <span class="prompt">57 × 11 =</span>
+  <input type="text" id="mul_34" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_34', 627, 'mulfb_34')">Check</button>
+  <span class="feedback" id="mulfb_34"></span>
+</div>
+<div class="question">
+  <span class="num">35.</span>
+  <span class="prompt">-7 × -9 =</span>
+  <input type="text" id="mul_35" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_35', 63, 'mulfb_35')">Check</button>
+  <span class="feedback" id="mulfb_35"></span>
+</div>
+<div class="question">
+  <span class="num">36.</span>
+  <span class="prompt">53 × -4 =</span>
+  <input type="text" id="mul_36" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_36', -212, 'mulfb_36')">Check</button>
+  <span class="feedback" id="mulfb_36"></span>
+</div>
+<div class="question">
+  <span class="num">37.</span>
+  <span class="prompt">-2 × -6 =</span>
+  <input type="text" id="mul_37" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_37', 12, 'mulfb_37')">Check</button>
+  <span class="feedback" id="mulfb_37"></span>
+</div>
+<div class="question">
+  <span class="num">38.</span>
+  <span class="prompt">-9 × 58 =</span>
+  <input type="text" id="mul_38" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_38', -522, 'mulfb_38')">Check</button>
+  <span class="feedback" id="mulfb_38"></span>
+</div>
+<div class="question">
+  <span class="num">39.</span>
+  <span class="prompt">6 × -1 =</span>
+  <input type="text" id="mul_39" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_39', -6, 'mulfb_39')">Check</button>
+  <span class="feedback" id="mulfb_39"></span>
+</div>
+<div class="question">
+  <span class="num">40.</span>
+  <span class="prompt">-3 × -8 =</span>
+  <input type="text" id="mul_40" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_40', 24, 'mulfb_40')">Check</button>
+  <span class="feedback" id="mulfb_40"></span>
+</div>
+<div class="question">
+  <span class="num">41.</span>
+  <span class="prompt">76 × 11 =</span>
+  <input type="text" id="mul_41" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_41', 836, 'mulfb_41')">Check</button>
+  <span class="feedback" id="mulfb_41"></span>
+</div>
+<div class="question">
+  <span class="num">42.</span>
+  <span class="prompt">-7 × 55 =</span>
+  <input type="text" id="mul_42" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_42', -385, 'mulfb_42')">Check</button>
+  <span class="feedback" id="mulfb_42"></span>
+</div>
+<div class="question">
+  <span class="num">43.</span>
+  <span class="prompt">64 × 3 =</span>
+  <input type="text" id="mul_43" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_43', 192, 'mulfb_43')">Check</button>
+  <span class="feedback" id="mulfb_43"></span>
+</div>
+<div class="question">
+  <span class="num">44.</span>
+  <span class="prompt">-5 × -1 =</span>
+  <input type="text" id="mul_44" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_44', 5, 'mulfb_44')">Check</button>
+  <span class="feedback" id="mulfb_44"></span>
+</div>
+<div class="question">
+  <span class="num">45.</span>
+  <span class="prompt">-6 × -4 =</span>
+  <input type="text" id="mul_45" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_45', 24, 'mulfb_45')">Check</button>
+  <span class="feedback" id="mulfb_45"></span>
+</div>
+<div class="question">
+  <span class="num">46.</span>
+  <span class="prompt">-5 × -5 =</span>
+  <input type="text" id="mul_46" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_46', 25, 'mulfb_46')">Check</button>
+  <span class="feedback" id="mulfb_46"></span>
+</div>
+<div class="question">
+  <span class="num">47.</span>
+  <span class="prompt">-2 × -9 =</span>
+  <input type="text" id="mul_47" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_47', 18, 'mulfb_47')">Check</button>
+  <span class="feedback" id="mulfb_47"></span>
+</div>
+<div class="question">
+  <span class="num">48.</span>
+  <span class="prompt">75 × 11 =</span>
+  <input type="text" id="mul_48" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_48', 825, 'mulfb_48')">Check</button>
+  <span class="feedback" id="mulfb_48"></span>
+</div>
+<div class="question">
+  <span class="num">49.</span>
+  <span class="prompt">-7 × 94 =</span>
+  <input type="text" id="mul_49" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_49', -658, 'mulfb_49')">Check</button>
+  <span class="feedback" id="mulfb_49"></span>
+</div>
+<div class="question">
+  <span class="num">50.</span>
+  <span class="prompt">-8 × 20 =</span>
+  <input type="text" id="mul_50" placeholder="?">
+  <button class="check-btn" onclick="checkAnswer('mul_50', -160, 'mulfb_50')">Check</button>
+  <span class="feedback" id="mulfb_50"></span>
+</div>
+<div class="section-score" id="mul_score"></div>
+<h2>Section 4: Number Sorting</h2>
+<p style="margin-bottom:12px;">Type the numbers in order, separated by commas.</p>
+<div class="question">
+  <span class="num">1.</span>
+  <span class="prompt">Descending: <b>4, 7, 10, 5, 9, 2</b></span>
+  <input type="text" id="sort_1" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_1', [10, 9, 7, 5, 4, 2], 'sortfb_1')">Check</button>
+  <span class="feedback" id="sortfb_1"></span>
+</div>
+<div class="question">
+  <span class="num">2.</span>
+  <span class="prompt">Descending: <b>9, 70, 39, 49</b></span>
+  <input type="text" id="sort_2" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_2', [70, 49, 39, 9], 'sortfb_2')">Check</button>
+  <span class="feedback" id="sortfb_2"></span>
+</div>
+<div class="question">
+  <span class="num">3.</span>
+  <span class="prompt">Ascending: <b>81, 52, 95, 100, 35</b></span>
+  <input type="text" id="sort_3" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_3', [35, 52, 81, 95, 100], 'sortfb_3')">Check</button>
+  <span class="feedback" id="sortfb_3"></span>
+</div>
+<div class="question">
+  <span class="num">4.</span>
+  <span class="prompt">Descending: <b>26, 59, 80, 65, 3</b></span>
+  <input type="text" id="sort_4" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_4', [80, 65, 59, 26, 3], 'sortfb_4')">Check</button>
+  <span class="feedback" id="sortfb_4"></span>
+</div>
+<div class="question">
+  <span class="num">5.</span>
+  <span class="prompt">Ascending: <b>74, 334, 817, 477, 360</b></span>
+  <input type="text" id="sort_5" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_5', [74, 334, 360, 477, 817], 'sortfb_5')">Check</button>
+  <span class="feedback" id="sortfb_5"></span>
+</div>
+<div class="question">
+  <span class="num">6.</span>
+  <span class="prompt">Descending: <b>52, 91, 1, 56</b></span>
+  <input type="text" id="sort_6" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_6', [91, 56, 52, 1], 'sortfb_6')">Check</button>
+  <span class="feedback" id="sortfb_6"></span>
+</div>
+<div class="question">
+  <span class="num">7.</span>
+  <span class="prompt">Descending: <b>8, 6, 4, 7, 3</b></span>
+  <input type="text" id="sort_7" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_7', [8, 7, 6, 4, 3], 'sortfb_7')">Check</button>
+  <span class="feedback" id="sortfb_7"></span>
+</div>
+<div class="question">
+  <span class="num">8.</span>
+  <span class="prompt">Ascending: <b>3, 10, 6, 5, 9</b></span>
+  <input type="text" id="sort_8" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_8', [3, 5, 6, 9, 10], 'sortfb_8')">Check</button>
+  <span class="feedback" id="sortfb_8"></span>
+</div>
+<div class="question">
+  <span class="num">9.</span>
+  <span class="prompt">Descending: <b>10, 2, 7, 8, 3</b></span>
+  <input type="text" id="sort_9" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_9', [10, 8, 7, 3, 2], 'sortfb_9')">Check</button>
+  <span class="feedback" id="sortfb_9"></span>
+</div>
+<div class="question">
+  <span class="num">10.</span>
+  <span class="prompt">Descending: <b>438, 299, 960, 957, 466, 636</b></span>
+  <input type="text" id="sort_10" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_10', [960, 957, 636, 466, 438, 299], 'sortfb_10')">Check</button>
+  <span class="feedback" id="sortfb_10"></span>
+</div>
+<div class="question">
+  <span class="num">11.</span>
+  <span class="prompt">Descending: <b>981, 176, 987, 768</b></span>
+  <input type="text" id="sort_11" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_11', [987, 981, 768, 176], 'sortfb_11')">Check</button>
+  <span class="feedback" id="sortfb_11"></span>
+</div>
+<div class="question">
+  <span class="num">12.</span>
+  <span class="prompt">Descending: <b>7, 9, 1, 4, 8, 2</b></span>
+  <input type="text" id="sort_12" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_12', [9, 8, 7, 4, 2, 1], 'sortfb_12')">Check</button>
+  <span class="feedback" id="sortfb_12"></span>
+</div>
+<div class="question">
+  <span class="num">13.</span>
+  <span class="prompt">Descending: <b>9, 8, 2, 10, 6</b></span>
+  <input type="text" id="sort_13" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_13', [10, 9, 8, 6, 2], 'sortfb_13')">Check</button>
+  <span class="feedback" id="sortfb_13"></span>
+</div>
+<div class="question">
+  <span class="num">14.</span>
+  <span class="prompt">Descending: <b>21, 56, 12, 11, 68, 57</b></span>
+  <input type="text" id="sort_14" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_14', [68, 57, 56, 21, 12, 11], 'sortfb_14')">Check</button>
+  <span class="feedback" id="sortfb_14"></span>
+</div>
+<div class="question">
+  <span class="num">15.</span>
+  <span class="prompt">Descending: <b>698, 109, 869, 755, 338</b></span>
+  <input type="text" id="sort_15" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_15', [869, 755, 698, 338, 109], 'sortfb_15')">Check</button>
+  <span class="feedback" id="sortfb_15"></span>
+</div>
+<div class="question">
+  <span class="num">16.</span>
+  <span class="prompt">Descending: <b>7, 8, 2, 3, 4</b></span>
+  <input type="text" id="sort_16" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_16', [8, 7, 4, 3, 2], 'sortfb_16')">Check</button>
+  <span class="feedback" id="sortfb_16"></span>
+</div>
+<div class="question">
+  <span class="num">17.</span>
+  <span class="prompt">Ascending: <b>8, 2, 10, 6</b></span>
+  <input type="text" id="sort_17" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_17', [2, 6, 8, 10], 'sortfb_17')">Check</button>
+  <span class="feedback" id="sortfb_17"></span>
+</div>
+<div class="question">
+  <span class="num">18.</span>
+  <span class="prompt">Ascending: <b>5251, 4008, 973, 989, 948</b></span>
+  <input type="text" id="sort_18" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_18', [948, 973, 989, 4008, 5251], 'sortfb_18')">Check</button>
+  <span class="feedback" id="sortfb_18"></span>
+</div>
+<div class="question">
+  <span class="num">19.</span>
+  <span class="prompt">Ascending: <b>509, 121, 72, 268</b></span>
+  <input type="text" id="sort_19" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_19', [72, 121, 268, 509], 'sortfb_19')">Check</button>
+  <span class="feedback" id="sortfb_19"></span>
+</div>
+<div class="question">
+  <span class="num">20.</span>
+  <span class="prompt">Ascending: <b>6, 8, 7, 5</b></span>
+  <input type="text" id="sort_20" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_20', [5, 6, 7, 8], 'sortfb_20')">Check</button>
+  <span class="feedback" id="sortfb_20"></span>
+</div>
+<div class="question">
+  <span class="num">21.</span>
+  <span class="prompt">Descending: <b>198, 561, 562, 448, 996, 779</b></span>
+  <input type="text" id="sort_21" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_21', [996, 779, 562, 561, 448, 198], 'sortfb_21')">Check</button>
+  <span class="feedback" id="sortfb_21"></span>
+</div>
+<div class="question">
+  <span class="num">22.</span>
+  <span class="prompt">Ascending: <b>7, 3, 4, 6</b></span>
+  <input type="text" id="sort_22" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_22', [3, 4, 6, 7], 'sortfb_22')">Check</button>
+  <span class="feedback" id="sortfb_22"></span>
+</div>
+<div class="question">
+  <span class="num">23.</span>
+  <span class="prompt">Descending: <b>58, 59, 15, 25, 2</b></span>
+  <input type="text" id="sort_23" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_23', [59, 58, 25, 15, 2], 'sortfb_23')">Check</button>
+  <span class="feedback" id="sortfb_23"></span>
+</div>
+<div class="question">
+  <span class="num">24.</span>
+  <span class="prompt">Ascending: <b>66, 20, 61, 89</b></span>
+  <input type="text" id="sort_24" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_24', [20, 61, 66, 89], 'sortfb_24')">Check</button>
+  <span class="feedback" id="sortfb_24"></span>
+</div>
+<div class="question">
+  <span class="num">25.</span>
+  <span class="prompt">Ascending: <b>15, 27, 86, 45, 35, 31</b></span>
+  <input type="text" id="sort_25" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_25', [15, 27, 31, 35, 45, 86], 'sortfb_25')">Check</button>
+  <span class="feedback" id="sortfb_25"></span>
+</div>
+<div class="question">
+  <span class="num">26.</span>
+  <span class="prompt">Descending: <b>10, 8, 2, 1, 5</b></span>
+  <input type="text" id="sort_26" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_26', [10, 8, 5, 2, 1], 'sortfb_26')">Check</button>
+  <span class="feedback" id="sortfb_26"></span>
+</div>
+<div class="question">
+  <span class="num">27.</span>
+  <span class="prompt">Ascending: <b>2316, 82, 8729, 4158, 6262</b></span>
+  <input type="text" id="sort_27" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_27', [82, 2316, 4158, 6262, 8729], 'sortfb_27')">Check</button>
+  <span class="feedback" id="sortfb_27"></span>
+</div>
+<div class="question">
+  <span class="num">28.</span>
+  <span class="prompt">Descending: <b>91, 48, 50, 21</b></span>
+  <input type="text" id="sort_28" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_28', [91, 50, 48, 21], 'sortfb_28')">Check</button>
+  <span class="feedback" id="sortfb_28"></span>
+</div>
+<div class="question">
+  <span class="num">29.</span>
+  <span class="prompt">Ascending: <b>7259, 4470, 8908, 5901</b></span>
+  <input type="text" id="sort_29" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_29', [4470, 5901, 7259, 8908], 'sortfb_29')">Check</button>
+  <span class="feedback" id="sortfb_29"></span>
+</div>
+<div class="question">
+  <span class="num">30.</span>
+  <span class="prompt">Descending: <b>10, 8, 3, 7, 6, 4</b></span>
+  <input type="text" id="sort_30" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_30', [10, 8, 7, 6, 4, 3], 'sortfb_30')">Check</button>
+  <span class="feedback" id="sortfb_30"></span>
+</div>
+<div class="question">
+  <span class="num">31.</span>
+  <span class="prompt">Descending: <b>8, 10, 6, 1, 4</b></span>
+  <input type="text" id="sort_31" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_31', [10, 8, 6, 4, 1], 'sortfb_31')">Check</button>
+  <span class="feedback" id="sortfb_31"></span>
+</div>
+<div class="question">
+  <span class="num">32.</span>
+  <span class="prompt">Descending: <b>4, 8, 7, 10, 9</b></span>
+  <input type="text" id="sort_32" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_32', [10, 9, 8, 7, 4], 'sortfb_32')">Check</button>
+  <span class="feedback" id="sortfb_32"></span>
+</div>
+<div class="question">
+  <span class="num">33.</span>
+  <span class="prompt">Descending: <b>5, 4, 10, 8</b></span>
+  <input type="text" id="sort_33" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_33', [10, 8, 5, 4], 'sortfb_33')">Check</button>
+  <span class="feedback" id="sortfb_33"></span>
+</div>
+<div class="question">
+  <span class="num">34.</span>
+  <span class="prompt">Descending: <b>3, 10, 5, 8, 6</b></span>
+  <input type="text" id="sort_34" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_34', [10, 8, 6, 5, 3], 'sortfb_34')">Check</button>
+  <span class="feedback" id="sortfb_34"></span>
+</div>
+<div class="question">
+  <span class="num">35.</span>
+  <span class="prompt">Ascending: <b>888, 967, 134, 954, 247</b></span>
+  <input type="text" id="sort_35" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_35', [134, 247, 888, 954, 967], 'sortfb_35')">Check</button>
+  <span class="feedback" id="sortfb_35"></span>
+</div>
+<div class="question">
+  <span class="num">36.</span>
+  <span class="prompt">Ascending: <b>82, 2, 73, 5, 39, 7</b></span>
+  <input type="text" id="sort_36" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_36', [2, 5, 7, 39, 73, 82], 'sortfb_36')">Check</button>
+  <span class="feedback" id="sortfb_36"></span>
+</div>
+<div class="question">
+  <span class="num">37.</span>
+  <span class="prompt">Descending: <b>6, 7, 10, 9</b></span>
+  <input type="text" id="sort_37" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_37', [10, 9, 7, 6], 'sortfb_37')">Check</button>
+  <span class="feedback" id="sortfb_37"></span>
+</div>
+<div class="question">
+  <span class="num">38.</span>
+  <span class="prompt">Ascending: <b>9, 3, 7, 2, 6, 10</b></span>
+  <input type="text" id="sort_38" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_38', [2, 3, 6, 7, 9, 10], 'sortfb_38')">Check</button>
+  <span class="feedback" id="sortfb_38"></span>
+</div>
+<div class="question">
+  <span class="num">39.</span>
+  <span class="prompt">Ascending: <b>2, 6, 1, 3, 10, 9</b></span>
+  <input type="text" id="sort_39" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_39', [1, 2, 3, 6, 9, 10], 'sortfb_39')">Check</button>
+  <span class="feedback" id="sortfb_39"></span>
+</div>
+<div class="question">
+  <span class="num">40.</span>
+  <span class="prompt">Ascending: <b>92, 77, 52, 78, 87</b></span>
+  <input type="text" id="sort_40" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_40', [52, 77, 78, 87, 92], 'sortfb_40')">Check</button>
+  <span class="feedback" id="sortfb_40"></span>
+</div>
+<div class="question">
+  <span class="num">41.</span>
+  <span class="prompt">Ascending: <b>25, 928, 601, 891, 950</b></span>
+  <input type="text" id="sort_41" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_41', [25, 601, 891, 928, 950], 'sortfb_41')">Check</button>
+  <span class="feedback" id="sortfb_41"></span>
+</div>
+<div class="question">
+  <span class="num">42.</span>
+  <span class="prompt">Descending: <b>1302, 2597, 4573, 9459</b></span>
+  <input type="text" id="sort_42" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_42', [9459, 4573, 2597, 1302], 'sortfb_42')">Check</button>
+  <span class="feedback" id="sortfb_42"></span>
+</div>
+<div class="question">
+  <span class="num">43.</span>
+  <span class="prompt">Descending: <b>55, 78, 85, 24, 79</b></span>
+  <input type="text" id="sort_43" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_43', [85, 79, 78, 55, 24], 'sortfb_43')">Check</button>
+  <span class="feedback" id="sortfb_43"></span>
+</div>
+<div class="question">
+  <span class="num">44.</span>
+  <span class="prompt">Descending: <b>26, 91, 25, 44, 35</b></span>
+  <input type="text" id="sort_44" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_44', [91, 44, 35, 26, 25], 'sortfb_44')">Check</button>
+  <span class="feedback" id="sortfb_44"></span>
+</div>
+<div class="question">
+  <span class="num">45.</span>
+  <span class="prompt">Descending: <b>6, 10, 8, 7, 9</b></span>
+  <input type="text" id="sort_45" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_45', [10, 9, 8, 7, 6], 'sortfb_45')">Check</button>
+  <span class="feedback" id="sortfb_45"></span>
+</div>
+<div class="question">
+  <span class="num">46.</span>
+  <span class="prompt">Descending: <b>215, 742, 321, 692, 167</b></span>
+  <input type="text" id="sort_46" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_46', [742, 692, 321, 215, 167], 'sortfb_46')">Check</button>
+  <span class="feedback" id="sortfb_46"></span>
+</div>
+<div class="question">
+  <span class="num">47.</span>
+  <span class="prompt">Ascending: <b>2, 30, 11, 64</b></span>
+  <input type="text" id="sort_47" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_47', [2, 11, 30, 64], 'sortfb_47')">Check</button>
+  <span class="feedback" id="sortfb_47"></span>
+</div>
+<div class="question">
+  <span class="num">48.</span>
+  <span class="prompt">Ascending: <b>5, 7, 9, 8, 10</b></span>
+  <input type="text" id="sort_48" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_48', [5, 7, 8, 9, 10], 'sortfb_48')">Check</button>
+  <span class="feedback" id="sortfb_48"></span>
+</div>
+<div class="question">
+  <span class="num">49.</span>
+  <span class="prompt">Ascending: <b>9, 8, 2, 10, 1, 4</b></span>
+  <input type="text" id="sort_49" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_49', [1, 2, 4, 8, 9, 10], 'sortfb_49')">Check</button>
+  <span class="feedback" id="sortfb_49"></span>
+</div>
+<div class="question">
+  <span class="num">50.</span>
+  <span class="prompt">Descending: <b>10, 2, 8, 7</b></span>
+  <input type="text" id="sort_50" placeholder="sorted..." style="width:220px;">
+  <button class="check-btn" onclick="checkSort('sort_50', [10, 8, 7, 2], 'sortfb_50')">Check</button>
+  <span class="feedback" id="sortfb_50"></span>
+</div>
+<div class="section-score" id="sort_score"></div>
+
+<script>
+function checkAnswer(inputId, correctAnswer, feedbackId) {
+  var input = document.getElementById(inputId);
+  var feedback = document.getElementById(feedbackId);
+  var val = input.value.trim();
+
+  if (val === '') return;
+
+  if (parseInt(val) === correctAnswer) {
+    feedback.textContent = 'Great job! ⭐';
+    feedback.className = 'feedback correct';
+    input.style.borderColor = '#2e7d32';
+  } else {
+    feedback.textContent = 'Please try again';
+    feedback.className = 'feedback tryagain';
+    input.style.borderColor = '#e65100';
+  }
+}
+
+function checkFactors(inputId, correctArray, feedbackId) {
+  var input = document.getElementById(inputId);
+  var feedback = document.getElementById(feedbackId);
+  var val = input.value.trim();
+
+  if (val === '') return;
+
+  var entered = val.split(',').map(function(x) {
+    return parseInt(x.trim());
+  }).filter(function(x) { return !isNaN(x); });
+
+  entered.sort(function(a,b) { return a - b; });
+  var correct = correctArray.slice().sort(function(a,b) { return a - b; });
+
+  if (JSON.stringify(entered) === JSON.stringify(correct)) {
+    feedback.textContent = 'Great job! ⭐';
+    feedback.className = 'feedback correct';
+    input.style.borderColor = '#2e7d32';
+  } else {
+    feedback.textContent = 'Please try again';
+    feedback.className = 'feedback tryagain';
+    input.style.borderColor = '#e65100';
+  }
+}
+
+function checkSort(inputId, correctArray, feedbackId) {
+  var input = document.getElementById(inputId);
+  var feedback = document.getElementById(feedbackId);
+  var val = input.value.trim();
+
+  if (val === '') return;
+
+  var entered = val.split(',').map(function(x) {
+    return parseInt(x.trim());
+  }).filter(function(x) { return !isNaN(x); });
+
+  if (JSON.stringify(entered) === JSON.stringify(correctArray)) {
+    feedback.textContent = 'Great job! ⭐';
+    feedback.className = 'feedback correct';
+    input.style.borderColor = '#2e7d32';
+  } else {
+    feedback.textContent = 'Please try again';
+    feedback.className = 'feedback tryagain';
+    input.style.borderColor = '#e65100';
+  }
+}
+</script>
+
+</body>
+</html>
