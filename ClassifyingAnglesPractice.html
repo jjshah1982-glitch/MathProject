@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classifying Angles Practice - Taani</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background-color: #f1f5f9;
+      color: #1e293b;
+      margin: 0;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      padding: 28px 32px;
+      max-width: 820px;
+      width: 100%;
+      border: 1px solid #e2e8f0;
+      position: relative;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .header-name {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #2563eb;
+      background-color: #eff6ff;
+      padding: 4px 16px;
+      border-radius: 20px;
+      border: 1px solid #bfdbfe;
+    }
+    .canvas-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 24px;
+      border: 1px solid #cbd5e1;
+    }
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+    .questions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .question-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #334155;
+      background-color: #f8fafc;
+      padding: 14px 20px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+    select {
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 2px solid #94a3b8;
+      background-color: #ffffff;
+      color: #0f172a;
+      outline: none;
+      cursor: pointer;
+    }
+    select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+    .actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+    button {
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-submit {
+      background-color: #2563eb;
+      color: #ffffff;
+    }
+    .btn-submit:hover {
+      background-color: #1d4ed8;
+    }
+    .btn-refresh {
+      background-color: #64748b;
+      color: #ffffff;
+    }
+    .btn-refresh:hover {
+      background-color: #475569;
+    }
+    .tick-10 { stroke: #334155; stroke-width: 2.5; }
+    .tick-5 { stroke: #94a3b8; stroke-width: 1.5; }
+    .text-10 { fill: #0f172a; font-size: 13px; font-weight: 700; text-anchor: middle; }
+    .text-5 { fill: #94a3b8; font-size: 11px; font-weight: 600; text-anchor: middle; }
+
+    /* Modal Overlay Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(3px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-card {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 32px 40px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+      transform: scale(0.9);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+    .modal-card.success {
+      border: 3px solid #22c55e;
+      background-color: #f0fdf4;
+    }
+    .modal-card.error {
+      border: 3px solid #f59e0b;
+      background-color: #fffbeb;
+    }
+    .modal-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .modal-card.success .modal-title {
+      color: #15803d;
+    }
+    .modal-card.error .modal-title {
+      color: #b45309;
+    }
+    .modal-body {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.6;
+    }
+    .modal-details {
+      margin-top: 16px;
+      padding: 16px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #bbf7d0;
+      text-align: left;
+      font-size: 1.1rem;
+      color: #166534;
+    }
+    .modal-details ul {
+      margin: 8px 0 0 0;
+      padding-left: 24px;
+    }
+    .modal-details li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <header>
+      <div class="header-title">Classifying Angles</div>
+      <div class="header-name">Taani</div>
+    </header>
+
+    <div class="canvas-container">
+      <svg id="protractorSvg" viewBox="0 0 760 410" width="760" height="410">
+        <defs>
+          <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+          </marker>
+          <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+          </marker>
+        </defs>
+
+        <!-- Shaded Angle Fill -->
+        <path id="angleArcShade" fill="rgba(220, 38, 38, 0.12)" />
+
+        <!-- Protractor Body Outer Boundary & Inner Baseline -->
+        <path d="M 110 330 A 270 270 0 0 1 650 330 Z" fill="#f8fafc" stroke="#64748b" stroke-width="3"/>
+        <line x1="110" y1="330" x2="650" y2="330" stroke="#334155" stroke-width="3"/>
+
+        <!-- Arc Tick Rings -->
+        <path d="M 130 330 A 250 250 0 0 1 630 330" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+
+        <!-- Dynamic Ticks and Outside Numbers Container -->
+        <g id="protractorTicks"></g>
+        <g id="protractorLabels"></g>
+
+        <!-- Center Point -->
+        <circle cx="380" cy="330" r="6" fill="#0f172a" />
+        <line x1="380" y1="320" x2="380" y2="340" stroke="#0f172a" stroke-width="2"/>
+        <line x1="370" y1="330" x2="390" y2="330" stroke="#0f172a" stroke-width="2"/>
+
+        <!-- Shaded Arc Line -->
+        <path id="angleArcLine" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="4 3" />
+
+        <!-- Fixed Base Ray (Points Right to 0°) -->
+        <line x1="380" y1="330" x2="615" y2="330" stroke="#2563eb" stroke-width="4.5" marker-end="url(#arrowBlue)" />
+
+        <!-- Dynamic Target Ray (Red) -->
+        <line id="targetRay" x1="380" y1="330" x2="380" y2="100" stroke="#dc2626" stroke-width="4.5" marker-end="url(#arrowRed)" />
+      </svg>
+    </div>
+
+    <div class="questions-container">
+      <div class="question-row">
+        <span>1. The angle is</span>
+        <select id="q1">
+          <option value="">-- select --</option>
+        </select>
+        <span>°.</span>
+      </div>
+
+      <div class="question-row">
+        <span>2. It is</span>
+        <select id="q2">
+          <option value="">-- select --</option>
+          <option value="smaller than">smaller than</option>
+          <option value="equal to">equal to</option>
+          <option value="greater than">greater than</option>
+        </select>
+        <span>a right angle.</span>
+      </div>
+
+      <div class="question-row">
+        <span>3. This is</span>
+        <select id="q3">
+          <option value="">-- select --</option>
+          <option value="acute angle">acute angle</option>
+          <option value="right angle">right angle</option>
+          <option value="obtuse angle">obtuse angle</option>
+          <option value="straight angle">straight angle</option>
+        </select>
+        <span>.</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="submitBtn" class="btn-submit" onclick="checkAnswers()">Submit</button>
+      <button id="refreshBtn" class="btn-refresh" onclick="generateNewQuestion()">New Angle</button>
+    </div>
+  </div>
+
+  <!-- Modal Overlay Dialog -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div id="modalCard" class="modal-card">
+      <div id="modalTitle" class="modal-title"></div>
+      <div id="modalBody" class="modal-body"></div>
+      <div id="modalDetails" class="modal-details" style="display: none;"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentAngle = 90;
+    let modalTimer = null;
+    let isModalActive = false;
+
+    const cx = 380;
+    const cy = 330;
+    const rOuter = 270;
+    const rTickBase = 250;
+    const rayLength = 230;
+
+    function initProtractor() {
+      const ticksGroup = document.getElementById('protractorTicks');
+      const labelsGroup = document.getElementById('protractorLabels');
+      const q1Select = document.getElementById('q1');
+
+      ticksGroup.innerHTML = '';
+      labelsGroup.innerHTML = '';
+      q1Select.innerHTML = '<option value="">-- select --</option>';
+
+      // Generate Options for Q1 (5 to 180 in steps of 5)
+      for (let a = 5; a <= 180; a += 5) {
+        const opt = document.createElement('option');
+        opt.value = a;
+        opt.textContent = a;
+        q1Select.appendChild(opt);
+      }
+
+      // Draw Protractor Scale Marks & Outside Labels
+      for (let deg = 0; deg <= 180; deg += 5) {
+        const rad = (deg * Math.PI) / 180;
+        const isTen = deg % 10 === 0;
+
+        // Ticks extend inward from the arc ring
+        const tickLen = isTen ? 18 : 10;
+        const x1 = cx + rTickBase * Math.cos(rad);
+        const y1 = cy - rTickBase * Math.sin(rad);
+        const x2 = cx + (rTickBase - tickLen) * Math.cos(rad);
+        const y2 = cy - (rTickBase - tickLen) * Math.sin(rad);
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('class', isTen ? 'tick-10' : 'tick-5');
+        ticksGroup.appendChild(line);
+
+        // Position numbers OUTSIDE the protractor arch rim (r = 292)
+        const rLabel = rOuter + 22;
+        const lx = cx + rLabel * Math.cos(rad);
+        const ly = cy - rLabel * Math.sin(rad) + 4;
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', lx);
+        text.setAttribute('y', ly);
+        text.setAttribute('class', isTen ? 'text-10' : 'text-5');
+        text.textContent = deg;
+        labelsGroup.appendChild(text);
+      }
+    }
+
+    function renderAngle(deg) {
+      const rad = (deg * Math.PI) / 180;
+      const rx = cx + rayLength * Math.cos(rad);
+      const ry = cy - rayLength * Math.sin(rad);
+
+      const targetRay = document.getElementById('targetRay');
+      targetRay.setAttribute('x2', rx);
+      targetRay.setAttribute('y2', ry);
+
+      const arcRadius = 70;
+      const ax = cx + arcRadius * Math.cos(rad);
+      const ay = cy - arcRadius * Math.sin(rad);
+      const largeArcFlag = deg > 180 ? 1 : 0;
+
+      // Draw Shaded Sector & Arc Line
+      const pathData = `M ${cx} ${cy} L ${cx + arcRadius} ${cy} A ${arcRadius} ${arcRadius} 0 ${largeArcFlag} 0 ${ax} ${ay} Z`;
+      const arcLineData = `M ${cx + arcRadius} ${cy} A ${arcRadius} ${arcRadius} 0 ${largeArcFlag} 0 ${ax} ${ay}`;
+
+      document.getElementById('angleArcShade').setAttribute('d', pathData);
+      document.getElementById('angleArcLine').setAttribute('d', arcLineData);
+    }
+
+    function generateNewQuestion() {
+      if (isModalActive) return;
+
+      // Pick random angle in multiples of 5 (from 5 to 180)
+      const step = Math.floor(Math.random() * 36) + 1; // 1 to 36
+      currentAngle = step * 5;
+
+      renderAngle(currentAngle);
+
+      // Reset dropdown values
+      document.getElementById('q1').value = '';
+      document.getElementById('q2').value = '';
+      document.getElementById('q3').value = '';
+    }
+
+    function showModal(type, titleText, bodyText, detailsHtml, durationMs, onCloseCallback) {
+      if (modalTimer) clearTimeout(modalTimer);
+      isModalActive = true;
+
+      const overlay = document.getElementById('modalOverlay');
+      const card = document.getElementById('modalCard');
+      const title = document.getElementById('modalTitle');
+      const body = document.getElementById('modalBody');
+      const details = document.getElementById('modalDetails');
+
+      card.className = 'modal-card ' + type;
+      title.textContent = titleText;
+      body.textContent = bodyText;
+
+      if (detailsHtml) {
+        details.innerHTML = detailsHtml;
+        details.style.display = 'block';
+      } else {
+        details.style.display = 'none';
+      }
+
+      overlay.classList.add('active');
+
+      modalTimer = setTimeout(() => {
+        overlay.classList.remove('active');
+        isModalActive = false;
+        if (onCloseCallback) onCloseCallback();
+      }, durationMs);
+    }
+
+    function checkAnswers() {
+      if (isModalActive) return;
+
+      const ans1 = parseInt(document.getElementById('q1').value, 10);
+      const ans2 = document.getElementById('q2').value;
+      const ans3 = document.getElementById('q3').value;
+
+      // Classify mathematically correct expected values
+      let expectedComparison = '';
+      let expectedType = '';
+
+      if (currentAngle < 90) {
+        expectedComparison = 'smaller than';
+        expectedType = 'acute angle';
+      } else if (currentAngle === 90) {
+        expectedComparison = 'equal to';
+        expectedType = 'right angle';
+      } else if (currentAngle < 180) {
+        expectedComparison = 'greater than';
+        expectedType = 'obtuse angle';
+      } else {
+        // 180 degrees
+        expectedComparison = 'greater than';
+        expectedType = 'straight angle';
+      }
+
+      const isQ1Correct = ans1 === currentAngle;
+      const isQ2Correct = ans2 === expectedComparison;
+      const isQ3Correct = ans3 === expectedType;
+
+      if (isQ1Correct && isQ2Correct && isQ3Correct) {
+        const detailsHtml = `
+          <strong>Correct Answers:</strong>
+          <ul>
+            <li>Angle: <strong>${currentAngle}°</strong></li>
+            <li>Comparison: <strong>${expectedComparison}</strong> a right angle</li>
+            <li>Type: <strong>${expectedType}</strong></li>
+          </ul>
+        `;
+        showModal(
+          'success',
+          'Great job! Correct!',
+          'You answered all questions correctly.',
+          detailsHtml,
+          5000,
+          generateNewQuestion
+        );
+      } else {
+        showModal(
+          'error',
+          'Try again!',
+          'One or more of your answers are incorrect. Review the angle and try again!',
+          null,
+          3000,
+          null
+        );
+      }
+    }
+
+    // Initialize application
+    initProtractor();
+    generateNewQuestion();
+  </script>
+</body>
+</html>
