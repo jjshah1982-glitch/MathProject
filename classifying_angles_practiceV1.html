@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classifying Angles with Protractor</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                        heading: ['Fredoka', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .ray-transition {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: 300px 240px;
+        }
+        .arc-transition {
+            transition: all 0.6s ease-out;
+        }
+        .worksheet-border {
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+
+        /* Print Specific Styling for 10-Page Printable Layout */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
+            body {
+                background: white !important;
+                padding: 0 !important;
+            }
+            .no-print, .print-controls {
+                display: none !important;
+            }
+            .page-break {
+                page-break-after: always;
+                break-after: page;
+            }
+            .worksheet-card {
+                border-color: #cbd5e1 !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 font-sans p-3 sm:p-6 flex flex-col justify-between">
+
+    <!-- Print Controls Header -->
+    <header class="print-controls max-w-4xl mx-auto w-full mb-4 flex items-center justify-between bg-white px-6 py-4 rounded-2xl shadow-sm border-2 border-slate-200">
+        <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-sky-500 text-white flex items-center justify-center font-bold text-2xl shadow-md">
+                <i class="fa-solid fa-print"></i>
+            </div>
+            <div>
+                <h1 class="font-heading text-xl sm:text-2xl font-bold text-slate-800 leading-tight">Classifying Angles Practice - 10 Worksheets</h1>
+                <p class="text-sm text-sky-600 font-bold">Student: Taani • Print Ready (A4 Format)</p>
+            </div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="flex items-center gap-3">
+            <button onclick="window.print()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-heading font-bold text-base px-5 py-2.5 rounded-xl shadow-md transition-all">
+                <i class="fa-solid fa-print"></i>
+                <span>Print Worksheets</span>
+            </button>
+            <button id="refreshBtn" onclick="generateNewAngle()" class="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-heading font-bold text-base px-5 py-2.5 rounded-xl shadow-md transition-all">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                <span>Interactive Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Interactive / Printable Container -->
+    <main class="max-w-4xl mx-auto w-full bg-white rounded-3xl shadow-xl border-4 border-sky-200 overflow-hidden flex-1 flex flex-col justify-between worksheet-card">
+        
+        <!-- Worksheet Header Strip -->
+        <div class="bg-sky-50 border-b-2 border-sky-100 p-4 sm:p-6 flex flex-wrap justify-between items-center gap-4">
+            <div>
+                <span class="bg-sky-200 text-sky-900 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Classifying Angles Practice • Taani</span>
+                <h2 class="text-xl sm:text-2xl font-heading font-bold text-slate-800 mt-1">Look at the Protractor</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-xs font-bold text-slate-400 block uppercase">Date: ____________</span>
+                <span class="text-xs font-bold text-slate-400 block uppercase">Score: _____ / 100</span>
+            </div>
+        </div>
+        <!-- Protractor Visual Display Section (Larger & High-Contrast) -->
+        <div class="p-4 sm:p-8 flex flex-col items-center justify-center bg-sky-50/30">
+            <div class="w-full max-w-3xl bg-white rounded-3xl p-4 sm:p-6 border-4 border-slate-300 shadow-lg flex justify-center items-center">
+                
+                <!-- Dynamic SVG Protractor -->
+                <svg id="protractorSvg" viewBox="0 0 760 410" class="w-full h-auto max-h-[420px] drop-shadow-sm select-none">
+                    <defs>
+                        <!-- Ray Arrow Marker -->
+                        <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                            <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
+                        </marker>
+                        <marker id="arrow-target" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                            <path d="M 0 1 L 10 5 L 0 9 z" fill="#ea580c" />
+                        </marker>
+                    </defs>
+
+                    <!-- Base Protractor Outer Boundary & Arch Rings -->
+                    <path d="M 90 340 A 290 290 0 0 1 670 340 Z" fill="#ffffff" stroke="#1e293b" stroke-width="2.5"/>
+                    <path d="M 140 340 A 240 240 0 0 1 620 340" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+                    <path d="M 200 340 A 180 180 0 0 1 560 340" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+
+                    <!-- Center Semicircle & Vertical Crosshair Line -->
+                    <path d="M 345 340 A 35 35 0 0 1 415 340 Z" fill="none" stroke="#1e293b" stroke-width="2"/>
+                    <line x1="380" y1="340" x2="380" y2="305" stroke="#1e293b" stroke-width="2"/>
+
+                    <!-- Dynamic Rays, Ticks, and Labels Container -->
+                    <g id="raysGroup"></g>
+                    <g id="ticksGroup"></g>
+                    <g id="labelsGroup"></g>
+
+                    <!-- Bold Continuous Black Horizontal Baseline Passing Through Center -->
+                    <line x1="70" y1="340" x2="690" y2="340" stroke="#000000" stroke-width="4.5" stroke-linecap="square"/>
+
+                    <!-- Center Point Vertex Dot -->
+                    <circle cx="380" cy="340" r="5" fill="#000000" />
+
+                    <!-- Angle Arc Highlight Area -->
+                    <path id="angleArc" d="" fill="rgba(251, 146, 60, 0.3)" stroke="#ea580c" stroke-width="3.5" class="arc-transition" />
+
+                    <!-- Fixed Baseline Ray (Pointing Right to 0°) -->
+                    <line x1="380" y1="340" x2="650" y2="340" stroke="#0284c7" stroke-width="5" marker-end="url(#arrow)" stroke-linecap="round" />
+
+                    <!-- Dynamic Target Angle Ray Group -->
+                    <g id="dynamicRayGroup" class="ray-transition">
+                        <line x1="380" y1="340" x2="650" y2="340" stroke="#ea580c" stroke-width="5" marker-end="url(#arrow-target)" stroke-linecap="round" />
+                    </g>
+                </svg>
+
+            </div>
+        </div>
+
+        <!-- Interactive Answer Section (Large & Easy to Read) -->
+        <div class="px-6 sm:px-10 py-8 bg-white border-t-4 border-sky-100">
+            <form id="quizForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                    
+                    <!-- Question 1: Angle Value -->
+                    <div class="bg-sky-50/60 p-5 rounded-2xl border-2 border-sky-200 flex flex-col justify-between shadow-sm">
+                        <label class="block text-sm font-bold text-sky-900 uppercase tracking-wide mb-2">1. Angle Measure</label>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="font-heading text-xl font-bold text-slate-800">The angle is</span>
+                            <select id="angleSelect" required class="bg-white border-3 border-sky-400 focus:border-sky-600 focus:ring-4 focus:ring-sky-200 font-heading font-bold text-sky-800 text-xl rounded-xl px-3 py-2 outline-none transition-all shadow-sm">
+                                <option value="" disabled selected>--</option>
+                            </select>
+                            <span class="font-heading text-xl font-bold text-slate-800">°.</span>
+                        </div>
+                    </div>
+
+                    <!-- Question 2: Right Angle Comparison -->
+                    <div class="bg-sky-50/60 p-5 rounded-2xl border-2 border-sky-200 flex flex-col justify-between shadow-sm">
+                        <label class="block text-sm font-bold text-sky-900 uppercase tracking-wide mb-2">2. Compare Right Angle</label>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="font-heading text-lg font-bold text-slate-800">It is</span>
+                            <select id="comparisonSelect" required class="bg-white border-3 border-sky-400 focus:border-sky-600 focus:ring-4 focus:ring-sky-200 font-heading font-bold text-sky-800 text-lg rounded-xl px-3 py-2 outline-none transition-all shadow-sm flex-1 min-w-[140px]">
+                                <option value="" disabled selected>-- Select --</option>
+                                <option value="equal to">equal to</option>
+                                <option value="greater than">greater than</option>
+                                <option value="smaller than">smaller than</option>
+                            </select>
+                            <span class="font-heading text-lg font-bold text-slate-800">a right angle.</span>
+                        </div>
+                    </div>
+
+                    <!-- Question 3: Classification -->
+                    <div class="bg-sky-50/60 p-5 rounded-2xl border-2 border-sky-200 flex flex-col justify-between shadow-sm">
+                        <label class="block text-sm font-bold text-sky-900 uppercase tracking-wide mb-2">3. Angle Type</label>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="font-heading text-lg font-bold text-slate-800">This is a/an</span>
+                            <select id="typeSelect" required class="bg-white border-3 border-sky-400 focus:border-sky-600 focus:ring-4 focus:ring-sky-200 font-heading font-bold text-sky-800 text-lg rounded-xl px-3 py-2 outline-none transition-all shadow-sm flex-1 min-w-[140px]">
+                                <option value="" disabled selected>-- Select --</option>
+                                <option value="acute angle">acute angle</option>
+                                <option value="right angle">right angle</option>
+                                <option value="obtuse angle">obtuse angle</option>
+                            </select>
+                            <span class="font-heading text-lg font-bold text-slate-800">.</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Submit Button & Feedback Area -->
+                <div class="pt-4 flex flex-col items-center">
+                    <button type="submit" id="submitBtn" class="w-full sm:w-auto min-w-[260px] bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-heading font-bold text-xl px-10 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-circle-check text-2xl"></i>
+                        <span>Submit Answer</span>
+                    </button>
+
+                    <!-- Feedback Alert Box -->
+                    <div id="feedbackBox" class="hidden w-full max-w-2xl mt-5 p-5 rounded-2xl text-center font-heading font-bold text-lg transition-all duration-300 transform scale-95 opacity-0"></div>
+                </div>
+
+            </form>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-4xl mx-auto w-full text-center mt-4 text-sm text-slate-500 font-bold">
+        Interactive Geometry Tool • High-Contrast Large View (Multiples of 5°)
+    </footer>
+
+    <!-- Application Logic Script -->
+    <script>
+        // State variables
+        let currentAngle = 90;
+        let score = 0;
+        let streak = 0;
+
+        const cx = 380;
+        const cy = 340;
+        const rTicksOuter = 290;
+        const rLabelsOuter = 265;
+        const rLabelsInner = 215;
+        const rCenterArc = 35;
+
+        // Generate ONLY multiples of 5 degrees (5, 10, 15, ..., 180)
+        const angleOptions = [];
+        for (let a = 5; a <= 180; a += 5) {
+            angleOptions.push(a);
+        }
+
+        // On DOM Load Setup
+        window.addEventListener('DOMContentLoaded', () => {
+            populateProtractorTicks();
+            populateAngleDropdown();
+            generateNewAngle();
+        });
+
+        // Generate Enlarged SVG Protractor Ticks, Radial Rays, and Dual Numbers
+        function populateProtractorTicks() {
+            const raysGroup = document.getElementById('raysGroup');
+            const ticksGroup = document.getElementById('ticksGroup');
+            const labelsGroup = document.getElementById('labelsGroup');
+
+            if (!ticksGroup || !labelsGroup) return;
+
+            raysGroup.innerHTML = '';
+            ticksGroup.innerHTML = '';
+            labelsGroup.innerHTML = '';
+
+            // 1. Draw 10° Radial Lines
+            for (let deg = 10; deg < 180; deg += 10) {
+                const rad = (deg * Math.PI) / 180;
+                const rx1 = cx + rCenterArc * Math.cos(rad);
+                const ry1 = cy - rCenterArc * Math.sin(rad);
+                const rx2 = cx + 180 * Math.cos(rad);
+                const ry2 = cy - 180 * Math.sin(rad);
+
+                const ray = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                ray.setAttribute('x1', rx1);
+                ray.setAttribute('y1', ry1);
+                ray.setAttribute('x2', rx2);
+                ray.setAttribute('y2', ry2);
+                ray.setAttribute('stroke', '#cbd5e1');
+                ray.setAttribute('stroke-width', '1.5');
+                raysGroup.appendChild(ray);
+            }
+
+            // 2. Ticks and Labels (0° to 180°)
+            for (let deg = 0; deg <= 180; deg += 1) {
+                const rad = (deg * Math.PI) / 180;
+                const cos = Math.cos(rad);
+                const sin = Math.sin(rad);
+
+                let tickLen = 8;
+                let strokeWidth = 1;
+                let strokeColor = "#334155";
+
+                if (deg % 10 === 0) {
+                    tickLen = 50;
+                    strokeWidth = 2;
+                    strokeColor = "#0f172a";
+                } else if (deg % 5 === 0) {
+                    tickLen = 22;
+                    strokeWidth = 1.5;
+                    strokeColor = "#1e293b";
+                }
+
+                const x1 = cx + rTicksOuter * cos;
+                const y1 = cy - rTicksOuter * sin;
+                const x2 = cx + (rTicksOuter - tickLen) * cos;
+                const y2 = cy - (rTicksOuter - tickLen) * sin;
+
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', x1);
+                line.setAttribute('y1', y1);
+                line.setAttribute('x2', x2);
+                line.setAttribute('y2', y2);
+                line.setAttribute('stroke', strokeColor);
+                line.setAttribute('stroke-width', strokeWidth);
+                ticksGroup.appendChild(line);
+
+                // Add Dual Labels every 10 degrees
+                if (deg % 10 === 0) {
+                    // Outer Scale (180 to 0)
+                    const outerVal = 180 - deg;
+                    const lxO = cx + rLabelsOuter * cos;
+                    const lyO = cy - rLabelsOuter * sin + 4;
+
+                    const textO = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    textO.setAttribute('x', lxO);
+                    textO.setAttribute('y', lyO);
+                    textO.setAttribute('fill', '#0f172a');
+                    textO.setAttribute('font-size', '13px');
+                    textO.setAttribute('font-weight', '700');
+                    textO.setAttribute('text-anchor', 'middle');
+                    textO.setAttribute('transform', `rotate(${-deg + 90}, ${lxO}, ${lyO})`);
+                    textO.textContent = outerVal;
+                    labelsGroup.appendChild(textO);
+
+                    // Inner Scale (0 to 180)
+                    const innerVal = deg;
+                    const lxI = cx + rLabelsInner * cos;
+                    const lyI = cy - rLabelsInner * sin + 4;
+
+                    const textI = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    textI.setAttribute('x', lxI);
+                    textI.setAttribute('y', lyI);
+                    textI.setAttribute('fill', '#0f172a');
+                    textI.setAttribute('font-size', '13px');
+                    textI.setAttribute('font-weight', '700');
+                    textI.setAttribute('text-anchor', 'middle');
+                    textI.setAttribute('transform', `rotate(${-deg + 90}, ${lxI}, ${lyI})`);
+                    textI.textContent = innerVal;
+                    labelsGroup.appendChild(textI);
+                }
+            }
+        }
+
+        // Fill Angle Dropdown ONLY with multiples of 5 (5° to 180°)
+        function populateAngleDropdown() {
+            const select = document.getElementById('angleSelect');
+            select.innerHTML = '<option value="" disabled selected>--</option>';
+            
+            for (let i = 5; i <= 180; i += 5) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = i;
+                select.appendChild(opt);
+            }
+        }
+
+        // Generate a new random angle (Multiple of 5)
+        function generateNewAngle() {
+            const randomIndex = Math.floor(Math.random() * angleOptions.length);
+            currentAngle = angleOptions[randomIndex];
+
+            // Rotate Ray (SVG center at 380, 340)
+            const rayGroup = document.getElementById('dynamicRayGroup');
+            if (rayGroup) {
+                rayGroup.style.transformOrigin = `${cx}px ${cy}px`;
+                rayGroup.style.transform = `rotate(${-currentAngle}deg)`;
+            }
+
+            // Update Angle Arc path
+            updateAngleArc(currentAngle);
+
+            // Reset Form and Feedback
+            document.getElementById('quizForm').reset();
+            hideFeedback();
+        }
+
+        // Update shaded SVG angle arc
+        function updateAngleArc(angle) {
+            const arcPath = document.getElementById('angleArc');
+            if (!arcPath) return;
+
+            const r = 70;
+            const endRad = angle * (Math.PI / 180);
+
+            const x1 = cx + r;
+            const y1 = cy;
+
+            const x2 = cx + r * Math.cos(endRad);
+            const y2 = cy - r * Math.sin(endRad);
+
+            const largeArcFlag = angle > 180 ? 1 : 0;
+
+            const d = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArcFlag} 0 ${x2} ${y2} Z`;
+            arcPath.setAttribute('d', d);
+        }
+
+        // Check Form Answers
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const userAngle = parseInt(document.getElementById('angleSelect').value, 10);
+            const userComparison = document.getElementById('comparisonSelect').value;
+            const userType = document.getElementById('typeSelect').value;
+
+            // Correct Answer Calculation
+            const correctAngle = currentAngle;
+            let correctComparison = "";
+            let correctType = "";
+
+            if (currentAngle < 90) {
+                correctComparison = "smaller than";
+                correctType = "acute angle";
+            } else if (currentAngle === 90) {
+                correctComparison = "equal to";
+                correctType = "right angle";
+            } else {
+                correctComparison = "greater than";
+                correctType = "obtuse angle";
+            }
+
+            const isAngleCorrect = userAngle === correctAngle;
+            const isComparisonCorrect = userComparison === correctComparison;
+            const isTypeCorrect = userType === correctType;
+
+            const isAllCorrect = isAngleCorrect && isComparisonCorrect && isTypeCorrect;
+
+            if (isAllCorrect) {
+                score += 10;
+                streak += 1;
+                updateScoreboard();
+                showFeedback(
+                    true,
+                    `🎉 Great job Taani! ${currentAngle}° is ${correctComparison} a right angle, so it is a/an ${correctType}.`
+                );
+
+                setTimeout(() => {
+                    generateNewAngle();
+                }, 1800);
+            } else {
+                streak = 0;
+                updateScoreboard();
+
+                let hint = [];
+                if (!isAngleCorrect) hint.push(`Angle measurement is ${correctAngle}°`);
+                if (!isComparisonCorrect) hint.push(`It is ${correctComparison} a right angle`);
+                if (!isTypeCorrect) hint.push(`It is a/an ${correctType}`);
+
+                showFeedback(
+                    false,
+                    `💡 Let's try again! Correct answers: ${hint.join(" • ")}.`
+                );
+            }
+        }
+
+        // Update score & streak display
+        function updateScoreboard() {
+            document.getElementById('scoreDisplay').textContent = score;
+            document.getElementById('streakDisplay').textContent = `${streak} 🔥`;
+        }
+
+        // Display feedback message
+        function showFeedback(isSuccess, message) {
+            const box = document.getElementById('feedbackBox');
+            if (!box) return;
+
+            box.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'border-emerald-400', 'bg-amber-100', 'text-amber-900', 'border-amber-400');
+
+            if (isSuccess) {
+                box.classList.add('bg-emerald-100', 'text-emerald-900', 'border-4', 'border-emerald-400');
+            } else {
+                box.classList.add('bg-amber-100', 'text-amber-900', 'border-4', 'border-amber-400');
+            }
+
+            box.innerHTML = message;
+            
+            setTimeout(() => {
+                box.classList.remove('scale-95', 'opacity-0');
+                box.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Hide feedback message
+        function hideFeedback() {
+            const box = document.getElementById('feedbackBox');
+            if (!box) return;
+
+            box.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                box.classList.add('hidden');
+            }, 200);
+        }
+    </script>
+</body>
+</html>
